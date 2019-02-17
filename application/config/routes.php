@@ -59,8 +59,8 @@ $route['seed'] = 'database/seed';
 | Sample REST API Routes
 | -------------------------------------------------------------------------
 */
-$route['v1/users'] = 'apis/users/';
-$route['v1/users/(:any)'] = 'apis/users/$1';
+$route['v1'] = 'welcome';
+$route['v1/users'] = 'apis/users';
 $route['v1/generate_token'] = 'apis/key';
 
 $route['apis/example/users/(:num)'] = 'api/example/users/id/$1'; // Example 4

@@ -16,6 +16,9 @@ class Users extends REST_Controller
 		parent::__construct();
 		$this->load->model('Users_model');
 	}
+//	public function index_get(){
+//		$this->response(null,REST_Controller::HTTP_BAD_REQUEST);
+//	}
 	public function index_get()
 	{
 		$id = $this->get('id');
@@ -43,6 +46,11 @@ class Users extends REST_Controller
 
 	public function index_post()
 	{
+		$jsonAccount = $this->post('accounts');
+		$importAccountDecode = json_decode($jsonAccount);
+
+
+		$this->response($importAccountDecode,REST_Controller::HTTP_CREATED);
 //		$data = array('name' => $this->input->post('name'),
 //			'pass' => $this->input->post('pass'),
 //			'type' => $this->input->post('type')
