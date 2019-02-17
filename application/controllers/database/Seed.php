@@ -25,4 +25,22 @@ class Seed extends CI_Controller
 		}
 		echo 'Success Seeding';
 	}
+	public function masterdata(){
+//		how many department
+//		$departments = array('Industri Pertanian','Informatika',)
+//		how many study program  4
+		$study_programs = array('Industri Pertanian','Informatika','Mesin Otomotif','Akuntansi');
+		$classes = array('MySql','Bootstrap','Apache','C++');
+		foreach ($study_programs as $key => $study_program) {
+			$this->db->insert('study_program', array(
+				'name' => $study_program
+			));
+			foreach ($classes as $class){
+				$this->db->insert('class',array('alias'=>$class,'id_study_program'=>$key));
+			}
+
+		}
+
+		echo 'Success Seeding';
+	}
 }

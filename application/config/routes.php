@@ -54,6 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 $route['migrate'] = 'database/migrate';
 $route['seed'] = 'database/seed';
+$route['seed/(:any)'] = 'database/seed/$1';
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes

@@ -11,6 +11,8 @@ require APPPATH . 'libraries/Format.php';
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends REST_Controller
 {
+	protected $status = 'success';
+	protected $message = array();
 	public function __construct()
 	{
 		parent::__construct();
@@ -47,10 +49,37 @@ class Users extends REST_Controller
 	public function index_post()
 	{
 		$jsonAccount = $this->post('accounts');
+		$modeInsert = $this->post('mode');
+//		var_dump($modeInsert);
 		$importAccountDecode = json_decode($jsonAccount);
+		if($modeInsert == 'import'){
+//			var_dump($importAccountDecode);
+//			TODO:pick column that want to import
+			foreach ($importAccountDecode as $account){
+				$student = array('nim'=>$account[1],
+							     'name'=>$account[2]);
+//				add data to table student first
+				if($this->Users_model->insert('student',$student)) {
+					$data = array('account_identifier' => $account[1],
+						'username' => $account[1],
+						'password' => $account[1]);
+//					after student, will insert into account table
+					if ($this->Users_model->insert('account', $data)) {
+						$this->status = 'success';
+					} else {
+						$this->status = 'errors';
+						$this->message[] = $this->db->_error_message();
+					}
+				}
+				else{
+					$this->status = 'errors';
+					$this->message[] = $this->db->_error_message();
+				}
+			}
+		}
+		$this->response(array('data'=>$importAccountDecode,'status'=>$this->status,'message'=>$this->message),REST_Controller::HTTP_CREATED);
 
-
-		$this->response($importAccountDecode,REST_Controller::HTTP_CREATED);
+//		$this->response($importAccountDecode,REST_Controller::HTTP_CREATED);
 //		$data = array('name' => $this->input->post('name'),
 //			'pass' => $this->input->post('pass'),
 //			'type' => $this->input->post('type')

@@ -18,7 +18,8 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 			),
 			'account_identifier' => array(
 				'type' => 'VARCHAR(16)',
-				'null' => false
+				'null' => false,
+				'unique' => TRUE
 			),
 			'username' =>array(
 				'type' =>'VARCHAR(16)',
@@ -29,11 +30,11 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'null' =>false
 			),
 			'created_at' => array(
-				'type' => 'DATETIME',
+				'type' => 'TIMESTAMP',
 				'null' => false,
 			),
 			'updated_at' => array(
-				'type' => 'DATETIME',
+				'type' => 'TIMESTAMP',
 				'null' => true,
 			)
 		));
@@ -49,26 +50,31 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'unique' => TRUE
 			),
 			'name' => array(
-				'type' => 'VARCHAR(64)'
+				'type' => 'VARCHAR(64)',
+				'NULL' => false
 			),
 			'birthdata' =>array(
-				'type' => 'TEXT'
+				'type' => 'TEXT',
+				'NULL' => true
 			),
 			'id_class' => array(
-				'type' => 'VARCHAR(16)'
+				'type' => 'VARCHAR(16)',
+				'NULL' => true
 			),
 			'semester' => array(
-				'type' => 'INT(2)'
+				'type' => 'INT(2)',
+				'NULL' => true
 			),
 			'id_study_program' => array(
-				'type' => 'INT(2)'
+				'type' => 'INT(2)',
+				'NULL' => true
 			),
 			'created_at' => array(
-				'type' => 'DATETIME',
+				'type' => 'TIMESTAMP',
 				'null' => false,
 			),
 			'updated_at' => array(
-				'type' => 'DATETIME',
+				'type' => 'TIMESTAMP',
 				'null' => true,
 			)
 		);
@@ -82,11 +88,15 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 		// Table structure for table 'table_name'
 		$this->dbforge->add_field(array(
 			'id' => array(
-				'type' => 'VARCHAR(16)',
+				'type' => 'INT(2)',
+				'auto_increment' => true
 			),
 			'alias' => array(
 				'type' => 'VARCHAR(16)',
 				'null' => false,
+			),
+			'id_study_program' => array(
+				'type' => 'INT(2)'
 			)
 		));
 		$this->dbforge->add_key('id', true);
@@ -112,7 +122,7 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'null' => false,
 			),
 			'id_study_program' => array(
-				'type' => 'VARCHAR(24)',
+				'type' => 'INT(2)',
 				'null' => false,
 			)
 
@@ -131,10 +141,12 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'auto_increment' => true
 			),
 			'name'=>array(
-				'type'=> 'VARCHAR(24)'
+				'type'=> 'VARCHAR(24)',
+				'null' => false,
 			),
 			'id_department'=>array(
-				'type'=>'INT(2)'
+				'type'=>'INT(2)',
+				'NULL' => true
 			)
 		));
 		$this->dbforge->add_key('id', true);
@@ -143,7 +155,7 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 //		Create table department
 		$this->dbforge->drop_table('department', true);
 
-		// Table structure for table 'table_name'
+		// Table structure for table 'department'
 		$this->dbforge->add_field(array(
 			'id' => array(
 				'type' => 'INT(2)',
