@@ -19,7 +19,6 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 			'account_identifier' => array(
 				'type' => 'VARCHAR(16)',
 				'null' => false,
-				'unique' => TRUE
 			),
 			'username' =>array(
 				'type' =>'VARCHAR(16)',
@@ -67,6 +66,10 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 			),
 			'id_study_program' => array(
 				'type' => 'INT(2)',
+				'NULL' => true
+			),
+			'id_company' => array(
+				'type' => 'INT(3)',
 				'NULL' => true
 			),
 			'created_at' => array(
@@ -139,6 +142,10 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'type' => 'INT(2)',
 				'unsigned' => true,
 				'auto_increment' => true
+			),
+			'alias' =>array(
+				'type' => 'VARCHAR(5)',
+				'unique' => true
 			),
 			'name'=>array(
 				'type'=> 'VARCHAR(24)',

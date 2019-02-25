@@ -562,7 +562,7 @@ $config['allowed_cors_headers'] = array(
   'Content-Type',
   'Accept',
   'Access-Control-Request-Method',
-	'X-API-KEY'
+  'X-API-KEY'
 );
 
 /*
@@ -591,7 +591,7 @@ $config['allowed_cors_methods'] = array(
 | source domain
 |
 */
-$config['allow_any_cors_domain'] = TRUE;
+$config['allow_any_cors_domain'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -604,7 +604,9 @@ $config['allow_any_cors_domain'] = TRUE;
 | e.g. $config['allowed_origins'] = ['http://www.example.com', 'https://spa.example.com']
 |
 */
-$config['allowed_cors_origins'] = [];
+//add your origin in here, if you have more than one api consumer
+
+$config['allowed_cors_origins'] = array('http://localhost:3000','http://api.simpkl.dio','https://api.simpkl.dio');
 
 /*
 |--------------------------------------------------------------------------
@@ -625,4 +627,4 @@ $config['allowed_cors_origins'] = [];
 | http://docs.sencha.com/extjs/6.5.2/classic/Ext.data.proxy.Rest.html#cfg-withCredentials
 |
 */
-$config['forced_cors_headers'] = [];
+$config['forced_cors_headers'] = ['Access-Control-Allow-Credentials' => 'true'];

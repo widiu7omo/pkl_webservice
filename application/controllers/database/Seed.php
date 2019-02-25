@@ -30,10 +30,12 @@ class Seed extends CI_Controller
 //		$departments = array('Industri Pertanian','Informatika',)
 //		how many study program  4
 		$study_programs = array('Industri Pertanian','Informatika','Mesin Otomotif','Akuntansi');
+		$alias = array('TIP','TI','MO','AK');
 		$classes = array('MySql','Bootstrap','Apache','C++');
 		foreach ($study_programs as $key => $study_program) {
 			$this->db->insert('study_program', array(
-				'name' => $study_program
+				'name' => $study_program,
+				'alias' => $alias[$key],
 			));
 			foreach ($classes as $class){
 				$this->db->insert('class',array('alias'=>$class,'id_study_program'=>$key));
