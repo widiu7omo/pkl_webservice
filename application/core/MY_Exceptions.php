@@ -93,6 +93,9 @@ class MY_Exceptions extends CI_Exceptions
 			array(
 				'status' => FALSE,
 				'error' => 'Internal Server Error',
+				'message' => $message,
+				'line' => $line,
+				'severity' => $severity
 			)
 		);
 

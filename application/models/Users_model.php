@@ -34,16 +34,36 @@ class Users_model extends CI_Model
 		return $this->db->insert($table,$data);
 	}
 //  USERS========================================================
-	public function read_users($id = NULL,$user = NULL){
+	public function read_users($id = NULL,$user = NULL,$status = NULL,$prody = NULL,$schedule = NULL){
 		$where = NULL;
 		if($user == 'student'){
-			$this->db->select(array('s.nim', 's.name','s.semester','s.birthdata','sp.alias','sp.name as department'))
+			if($status == 'sidang'){
+				$select = array('s.nim', 's.name','s.birthdata','s.status','sp.alias','sp.name as department','ir.name as apptitle');
+			}
+			else{
+				$select = array('s.nim', 's.name','s.semester','s.birthdata','sp.alias','sp.name as department','c.name as company');
+			}
+			$this->db->select($select)
 				->from('student s')
-				->join('study_program sp','sp.id = s.id_study_program','LEFT OUTER');
+				->join('study_program sp','sp.id = s.id_study_program','LEFT OUTER')
+				->join('internshipreport ir','ir.id = s.id_internshipreport','LEFT OUTER')
+				->join('company c','c.id = s.id_company','LEFT OUTER');
+			$where = array();
+//			var_dump($user,$status,$prody,$schedule);
+			if($prody != NULL) {
+				$where = array_merge($where,array('sp.alias' => $prody));
+			}
+			if($schedule != NULL) {
+				$where = array_merge($where,array('s.status' => $schedule));
+			}
 			if($id != NULL){
-				$where = array('nim' => $id);
+				$where = array_merge(array('s.nim' => $id));
+			}
+//			var_dump($where);
+			if(count($where) != 0){
 				$this->db->where($where);
 			}
+
 		}
 		elseif ($user == 'lecturer') {
 			$this->db->select(array('l.nip','l.nik', 'l.name','sp.alias'.'sp.name as department'))

@@ -56,6 +56,10 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'type' => 'TEXT',
 				'NULL' => true
 			),
+			'staus' =>array(
+				'type' => 'VARCHAR(15)',
+				'NULL' => true
+			),
 			'id_class' => array(
 				'type' => 'VARCHAR(16)',
 				'NULL' => true
@@ -69,6 +73,10 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'NULL' => true
 			),
 			'id_company' => array(
+				'type' => 'INT(3)',
+				'NULL' => true
+			),
+			'id_internshipreport' => array(
 				'type' => 'INT(3)',
 				'NULL' => true
 			),
@@ -176,6 +184,72 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 		));
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('department');
+
+		//Create table company
+		$this->dbforge->drop_table('company', true);
+
+		// Table structure for table 'department'
+		$this->dbforge->add_field(array(
+			'id' => array(
+				'type' => 'INT(3)',
+				'unsigned' => true,
+				'auto_increment' => true
+			),
+			'name' => array(
+				'type' => 'VARCHAR(100)',
+				'null' => false,
+			),
+			'address' => array(
+				'type' => 'VARCHAR(255)',
+				'null' => true,
+			),
+			'id_city' => array(
+				'type' => 'INT(3)',
+				'null' => true
+			)
+		));
+		$this->dbforge->add_key('id', true);
+		$this->dbforge->create_table('company');
+
+		//Create table internshipreport
+		$this->dbforge->drop_table('internshipreport', true);
+
+		// Table structure for table 'internshipreport'
+		$this->dbforge->add_field(array(
+			'id' => array(
+				'type' => 'INT(3)',
+				'unsigned' => true,
+				'auto_increment' => true
+			),
+			'name' => array(
+				'type' => 'VARCHAR(100)',
+				'null' => false,
+			),
+			'implement' => array(
+				'type' => 'VARCHAR(255)',
+				'null' => true,
+			),
+		));
+		$this->dbforge->add_key('id', true);
+		$this->dbforge->create_table('internshipreport');
+
+		// create table city
+		$this->dbforge->drop_table('city', true);
+
+		// Table structure for table 'department'
+		$this->dbforge->add_field(array(
+			'id' => array(
+				'type' => 'INT(3)',
+				'unsigned' => true,
+				'auto_increment' => true
+			),
+			'name' => array(
+				'type' => 'VARCHAR(100)',
+				'null' => false,
+			),
+		));
+		$this->dbforge->add_key('id', true);
+		$this->dbforge->create_table('city');
 
 //		Create table rest keys
 		$this->config->load('rest');

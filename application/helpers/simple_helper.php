@@ -13,5 +13,9 @@ if (!function_exists('simple_helper')) {
 		$ci =& get_instance();
 		return $ci->db->select($column)->from($table)->where($where)->get()->result();
 	}
+	function get_count_data($table,$where = array()){
+		$ci =& get_instance();
+		return $ci->db->from($table)->where($where[0],$where[1],$where[2])->count_all_results();
+	}
 
 }
