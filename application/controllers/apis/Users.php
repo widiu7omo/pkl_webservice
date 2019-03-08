@@ -61,7 +61,7 @@ class Users extends REST_Controller
 //		//get all data
 //		else {
 		if ($count == 'true') {
-			$r = get_count_data('student', array('id_company is NULL',null,false));
+			$r = get_count_data('student', array('id_company is NULL', null, false));
 		} else {
 			if ($prody == 'All') {
 				$prody = NULL;
@@ -95,8 +95,11 @@ class Users extends REST_Controller
 
 	public function accounts_post()
 	{
+// useless, cz bulk import already did on post users.
+		//you should use this for create single account
 		$jsonAccount = $this->post('accounts');
 		$modeInsert = $this->post('mode');
+		//TODO:add modeinsert to single, for insert once
 //		var_dump($modeInsert);
 		$importAccountDecode = json_decode($jsonAccount);
 		if ($modeInsert == 'import') {
@@ -138,40 +141,62 @@ class Users extends REST_Controller
 	{
 		$jsonUsers = $this->post('users');
 		$modeInsert = $this->post('mode');
+		$userType = $this->post('userType');
 		$decodeJsonUsers = json_decode($jsonUsers);
 		$responsedata = array();
 		if ($modeInsert == 'import') {
 //			var_dump($decodeJsonUsers);
-
 //			TODO:pick column that want to import from excel
 //			var_dump(get_single_data('id','study_program',array('alias'=>$decodeJsonUsers->prody)));
-			$program_study = get_single_data(array('id', 'name'), 'study_program', array('alias' => $decodeJsonUsers->prody));
+			$program_study = get_single_data(array('id', 'name'), 'study_program', array('alias' => isset($decodeJsonUsers->prody) ? $decodeJsonUsers->prody : null));
 			foreach ($decodeJsonUsers->data as $user) {
-				$student = array('nim' => $user->NIM,
-					'name' => $user->Nama,
-					'semester' => $decodeJsonUsers->semester,
-					'id_study_program' => $program_study[0]->id);
+				if (isset($userType) && $userType == 'lecturer') {
+					$lecturer = array('nip' => $user->nip, 'name' => $user->nama);
+					if ($this->Users_model->insert_users('lecturer', $lecturer)){
+						$data = array('account_identifier' => $user->nip,
+							'username' => $user->nip,
+							'password' => $user->nip);
+////					after student, will insert into account table
+						if ($this->Users_model->insert_account('account', $data)) {
+							$this->status = 'success';
+						} else {
+							$this->status = 'errors';
+							$this->message[] = $this->db->_error_message();
+						}
+						array_push($responsedata, $lecturer);
+					}
+					else {
+						$this->status = 'errors';
+						$this->message[] = $this->db->_error_message();
+					}
+				} else {//mean student
+					$student = array('nim' => $user->nim,
+						'name' => $user->nama,
+						'semester' => $decodeJsonUsers->semester,
+						'id_study_program' => $program_study[0]->id);
 //				add data to table student first
-				if ($this->Users_model->insert_users('student', $student)) {
+					if ($this->Users_model->insert_users('student', $student)) {
 //					Do insert to account when data successfully insert to student table
 
-					$data = array('account_identifier' => $user->NIM,
-						'username' => $user->NIM,
-						'password' => $user->NIM);
+						$data = array('account_identifier' => $user->nim,
+							'username' => $user->nim,
+							'password' => $user->nim);
 ////					after student, will insert into account table
-					if ($this->Users_model->insert_account('account', $data)) {
-						$this->status = 'success';
+						if ($this->Users_model->insert_account('account', $data)) {
+							$this->status = 'success';
+						} else {
+							$this->status = 'errors';
+							$this->message[] = $this->db->_error_message();
+						}
+						//push result to front end
+						$student['department'] = $program_study[0]->name;
+						array_push($responsedata, $student);
 					} else {
 						$this->status = 'errors';
 						$this->message[] = $this->db->_error_message();
 					}
-					//push result to front end
-					$student['department'] = $program_study[0]->name;
-					array_push($responsedata, $student);
-				} else {
-					$this->status = 'errors';
-					$this->message[] = $this->db->_error_message();
 				}
+
 			}
 		}
 

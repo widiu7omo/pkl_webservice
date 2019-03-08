@@ -22,7 +22,7 @@ class Users_model extends CI_Model
 		elseif ($user == 'lecturer') {
 			$this->db->select(array('a.account_identifier', 'a.username', 'l.name'))
 				->from('account a')
-				->join('lecturer l', 'a.account_identifier = l.nik', 'LEFT OUTER');
+				->join('lecturer l', 'a.account_identifier = l.nip', 'LEFT OUTER');
 		}
 		if($id != NULL){
 			$where = array('id' => $id);
@@ -66,7 +66,7 @@ class Users_model extends CI_Model
 
 		}
 		elseif ($user == 'lecturer') {
-			$this->db->select(array('l.nip','l.nik', 'l.name','sp.alias'.'sp.name as department'))
+			$this->db->select(array('l.nip', 'l.name','sp.alias','sp.name as department'))
 				->from('lecturer l')
 				->join('study_program sp','sp.id = l.id_study_program','LEFT OUTER');
 			if($id != NULL){

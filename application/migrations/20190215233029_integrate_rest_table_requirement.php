@@ -120,13 +120,7 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 		$this->dbforge->add_field(array(
 			'nip' => array(
 				'type' => 'VARCHAR(16)',
-				'null' => true,
-				'unique' => true
-			),
-			'nik' => array(
-				'type' => 'VARCHAR(16)',
 				'null' => false,
-				'unique' => true
 			),
 			'name' => array(
 				'type' => 'VARCHAR(24)',
@@ -138,7 +132,7 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 			)
 
 		));
-		$this->dbforge->add_key('nik', true);
+		$this->dbforge->add_key('nip', true);
 		$this->dbforge->create_table('lecturer');
 
 //		Create table study program
@@ -201,6 +195,10 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 			),
 			'address' => array(
 				'type' => 'VARCHAR(255)',
+				'null' => true,
+			),
+			'quota' => array(
+				'type' => 'INT(3)',
 				'null' => true,
 			),
 			'id_city' => array(

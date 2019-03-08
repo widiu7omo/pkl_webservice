@@ -61,7 +61,7 @@ $route['seed/(:any)'] = 'database/seed/$1';
 | -------------------------------------------------------------------------
 */
 $route['v1'] = 'welcome';
-$route['v1/companies'] = 'apis/Companies';
+$route['v1/companies'] = 'apis/companies';
 $route['v1/accounts'] = 'apis/users/accounts';
 $route['v1/users'] = 'apis/users/users';
 $route['v1/generate_token'] = 'apis/key';
