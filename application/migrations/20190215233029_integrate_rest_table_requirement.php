@@ -56,7 +56,7 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'type' => 'TEXT',
 				'NULL' => true
 			),
-			'staus' =>array(
+			'status' =>array(
 				'type' => 'VARCHAR(15)',
 				'NULL' => true
 			),
