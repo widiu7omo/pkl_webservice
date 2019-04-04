@@ -55,6 +55,8 @@ $route['translate_uri_dashes'] = TRUE;
 $route['migrate'] = 'database/migrate';
 $route['seed'] = 'database/seed';
 $route['seed/(:any)'] = 'database/seed/$1';
+$route['seedmaster'] = 'database/SeedMaster';
+$route['seedmaster/(:any)'] = 'database/SeedMaster/$1';
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes

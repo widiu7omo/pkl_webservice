@@ -61,7 +61,7 @@ class Migration_Integrate_rest_table_requirement extends CI_Migration
 				'NULL' => true
 			),
 			'id_class' => array(
-				'type' => 'VARCHAR(16)',
+				'type' => 'INT(2)',
 				'NULL' => true
 			),
 			'semester' => array(

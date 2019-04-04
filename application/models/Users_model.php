@@ -80,6 +80,14 @@ class Users_model extends CI_Model
 	public function insert_users($table,$data){
 		return $this->db->insert($table,$data);
 	}
+	//PWA Single User
+	public function read_user(){
+		return $this->db->select('*')
+			->from('student s')
+			->join('study_program sp','sp.id = s.id_study_program','LEFT OUTER')
+			->join('internshipreport ir','ir.id = s.id_internshipreport','LEFT OUTER')
+			->join('company c','c.id = s.id_company','LEFT OUTER');
+	}
 }
 
 /* End of file .php */
